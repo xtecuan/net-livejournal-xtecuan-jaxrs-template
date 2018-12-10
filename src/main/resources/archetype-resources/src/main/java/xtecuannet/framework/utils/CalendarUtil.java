@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ${package}.jaxrs.api.utils;
+package ${package}.xtecuannet.framework.utils;
 
 import java.util.Calendar;
 import java.util.Date;

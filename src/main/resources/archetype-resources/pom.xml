@@ -18,14 +18,14 @@
     </licenses>
     
     <properties>
-       <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir> 
-       <!-- Explicitly declaring the source encoding eliminates the following message: -->
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir> 
+        <!-- Explicitly declaring the source encoding eliminates the following message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
         resources, i.e. build is platform dependent! --> 
-       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-       <!-- maven-compiler-plugin --> 
-       <maven.compiler.target>1.8</maven.compiler.target>   
-       <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+        <!-- maven-compiler-plugin --> 
+        <maven.compiler.target>1.8</maven.compiler.target>   
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -166,6 +166,31 @@
             <artifactId>cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.0</version>
+        </dependency>
+        <dependency>  
+            <groupId>org.primefaces.themes</groupId>  
+            <artifactId>all-themes</artifactId>  
+            <version>1.0.10</version>  
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.27-incubating</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.53</version>
+        </dependency>
     </dependencies>
     <build>
         <!-- Set the name of the WAR, used as the context root when the app
@@ -216,4 +241,12 @@
             </build>
         </profile>
     </profiles>
+    <repositories>
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+    </repositories>
 </project>

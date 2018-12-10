@@ -16,12 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ${package}.jaxrs.converters;
+package ${package}.xtecuannet.framework.web.jaxrs.converters;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,26 +31,24 @@ import java.util.Date;
  *
  * @author xtecuan
  */
-public class DateNullSerializer extends JsonSerializer<Date> {
+public class DateNullDeSerializer extends JsonDeserializer<Date> {
 
-    private static final String DEFAULT_DATE = "01/01/1900 00:00:00";
     private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
     @Override
-    public void serialize(Date t, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonGenerationException {
-
-        if (t != null) {
-
-            if (sdf.format(t).equals(DEFAULT_DATE)) {
-                jgen.writeString("");
+    public Date deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
+        Date result = null;
+        JsonNode node = jp.readValueAsTree();
+        try {
+            if (node.asText().isEmpty()) {
+                result = null;
             } else {
-
-                jgen.writeString(sdf.format(t));
+                result = sdf.parse(node.asText());
             }
-        } else {
-            jgen.writeString("");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
+        return result;
     }
 
 }

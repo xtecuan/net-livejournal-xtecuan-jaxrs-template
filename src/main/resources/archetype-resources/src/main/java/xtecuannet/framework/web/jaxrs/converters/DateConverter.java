@@ -16,37 +16,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ${package}.jaxrs.converters;
+package ${package}.xtecuannet.framework.web.jaxrs.converters;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.ws.rs.ext.ParamConverter;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author xtecuan
  */
-public class DateNullDeSerializer extends JsonDeserializer<Date> {
+public class DateConverter implements ParamConverter<Date> {
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private static final Logger LOGGER = Logger.getLogger(DateConverter.class);
+    private final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
     @Override
-    public Date deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
+    public Date fromString(String parameter) {
         Date result = null;
-        JsonNode node = jp.readValueAsTree();
         try {
-            if (node.asText().isEmpty()) {
-                result = null;
-            } else {
-                result = sdf.parse(node.asText());
-            }
+            result = sdf.parse(parameter);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error("Error converting " + parameter + " to java.util.Date: ", e);
+        }
+        return result;
+    }
+
+    @Override
+    public String toString(Date date) {
+        String result = null;
+        if (date != null) {
+            result = sdf.format(date);
+        }else{
+            result = "";
         }
         return result;
     }

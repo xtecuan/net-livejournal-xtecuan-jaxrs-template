@@ -16,14 +16,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ${package}.config.facade.utils;
+package ${package}.xtecuannet.framework.configuration;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
 import org.apache.commons.configuration2.PropertiesConfiguration;
@@ -106,6 +109,10 @@ public class ConfigurationFacade {
 
     public String getApiVersion() {
         return getValue(API_VERSION);
+    }
+
+    public List<String> getList(String key){        
+        return Arrays.asList(getValue(key).split(","));
     }
 
     public Map<String, String> getApiMetadata() {

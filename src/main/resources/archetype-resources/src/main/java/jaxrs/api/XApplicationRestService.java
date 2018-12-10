@@ -18,7 +18,8 @@
  */
 package ${package}.jaxrs.api;
 
-import ${package}.config.facade.utils.ConfigurationFacade;
+import ${package}.xtecuannet.framework.configuration.ConfigurationFacade;
+import ${package}.xtecuannet.framework.web.jaxrs.XApplicationBaseRestService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -32,27 +33,19 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @Path("/framework")
-public class XApplicationRestService {
+public class XApplicationRestService extends XApplicationBaseRestService{
     @EJB
     private ConfigurationFacade configFacade;
     
-    private boolean validateToken(String currentToken) {
-        return configFacade.getApiToken().equals(currentToken);
-    }
+    @Override
+    protected ConfigurationFacade getConfig() {
+        return configFacade;
+    }    
 
-    private Response forbiddenResponseForPassCode(String passCode) {
-        String message = "";
-        if (passCode == null || passCode.equals("")) {
-            message = "Forbidden 403: You need to provide a valid passCode";
-        } else {
-            message = "Forbidden 403: The passCode provided is invalid : " + passCode;
-        }
-        return Response.status(Response.Status.FORBIDDEN).entity(message).type("text/plain").build();
-    }
-    
     @GET
     @Path("/")
     @Produces({"application/json"})
+    @Override
     public Response root(){
         return Response.ok(configFacade.getApiMetadata()).build();
     }
