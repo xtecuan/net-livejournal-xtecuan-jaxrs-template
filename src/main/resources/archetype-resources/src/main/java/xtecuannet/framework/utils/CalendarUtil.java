@@ -20,6 +20,7 @@ package ${package}.xtecuannet.framework.utils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  *
@@ -63,9 +64,37 @@ public final class CalendarUtil {
     }
 
     public Date addMonthsToDate(Date date, int months) {
-        Calendar ccalendar = getCurrentCalendar();
+        Calendar ccalendar = Calendar.getInstance();
+        ccalendar.setTime(date);
         ccalendar.add(Calendar.MONTH, months);
         return ccalendar.getTime();
+    }
+
+    public Date addDaysToDate(Date date, int days) {
+        Calendar ccalendar = Calendar.getInstance();
+        ccalendar.setTime(date);
+        ccalendar.add(Calendar.DATE, days);
+        return ccalendar.getTime();
+    }
+
+    public Date fromUnixTimestampToDate(String unixtimestamp, String timezone) {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone(timezone));
+        c.setTimeInMillis(Long.parseLong(unixtimestamp) * 1000L);
+        return c.getTime();
+    }
+
+    public Date fromUnixTimestampToDefaultDate(String unixtimestamp) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(Long.parseLong(unixtimestamp) * 1000L);
+        return c.getTime();
+    }
+
+    public Date fromUnixTimestampToNewYorkDate(String unixtimestamp) {
+        return fromUnixTimestampToDate(unixtimestamp, "America/New_York");
+    }
+
+    public Date fromUnixTimestampToCST(String unixtimestamp) {
+        return fromUnixTimestampToDate(unixtimestamp, "CST");
     }
 
 }
